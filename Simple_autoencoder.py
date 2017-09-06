@@ -1,6 +1,7 @@
 from keras.layers import Input, Dense
 from keras.models import Model
 from keras.datasets import mnist
+from keras import regularizers
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -20,7 +21,7 @@ encoding_dim = 32
 # this is our input placeholder
 input_img = Input(shape=(input_dim,))
 # "encoded" is the encoded representation of the input
-encoded = Dense(encoding_dim, activation='relu')(input_img)
+encoded = Dense(encoding_dim, activation='relu',activity_regularizer=regularizers.l1(10e-5))(input_img)
 # "decoded" is the lossy reconstruction of the input
 decoded = Dense(784, activation='sigmoid')(encoded)
 
@@ -50,7 +51,7 @@ autoencoder.fit(x_train, x_train,
 encoded_imgs = encoder.predict(x_test)
 decoded_imgs = decoder.predict(encoded_imgs)
 
-
+autoencoder = Model(input_img, decoded)
 n = 10  # how many digits we will display
 plt.figure(figsize=(20, 4))
 for i in range(n):
