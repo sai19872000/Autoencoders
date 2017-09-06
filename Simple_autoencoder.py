@@ -51,7 +51,6 @@ autoencoder.fit(x_train, x_train,
 encoded_imgs = encoder.predict(x_test)
 decoded_imgs = decoder.predict(encoded_imgs)
 
-autoencoder = Model(input_img, decoded)
 n = 10  # how many digits we will display
 plt.figure(figsize=(20, 4))
 for i in range(n):
